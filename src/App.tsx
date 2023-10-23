@@ -47,8 +47,8 @@ export function App() {
   }, [employeeUtils.loading, employees, loadAllTransactions])
    // make The View more** button is not be visible when transactions are filtered by user
    const showViewMoreButton = 
-   transactions !== null && transactionsByEmployee
-    === null && true && paginatedTransactions?.nextPage !== null;
+    transactions !== null &&  paginatedTransactionsUtils.loading !== true && 
+     paginatedTransactions?.nextPage !== null && paginatedTransactions?.data 
   return (
     <Fragment>
       <main className="MainContainer">
@@ -80,14 +80,14 @@ export function App() {
         <div className="RampBreak--l" />
         <div className="RampGrid">
           <Transactions transactions={transactions} />
-          {showViewMoreButton &&(
-            <button
-              className="RampButton"
-              disabled={paginatedTransactionsUtils.loading || paginatedTransactions?.nextPage === null}
-              onClick={async (e) => {
-                await loadAllTransactions()
-              }}
-            >
+          {showViewMoreButton && (
+              <button
+                className="RampButton"
+                disabled={paginatedTransactionsUtils.loading}
+                onClick={async () => {
+                  await loadAllTransactions()
+                }}
+              >
               View More
             </button>
           )}
